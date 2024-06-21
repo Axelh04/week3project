@@ -11,8 +11,11 @@ function App() {
 
 
   const onSelectBoard = (selectedBoardID) => {
+    localStorage.setItem('currentBoardID', selectedBoardID);
     setCurrentBoardID(selectedBoardID);
   };
+
+
 
   return (
 

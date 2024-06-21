@@ -18,7 +18,8 @@ model Board {
   title     String
   author    String
   category  String
-  cards     Card[] 
+  cards     Card[]
+  gifURL    String 
 }
 
 model Card {
@@ -26,5 +27,8 @@ model Card {
   title   String
   author  String
   board   Board @relation(fields: [boardId], references: [id])
-  boardId Int 
+  boardId Int
+  votes Int
+  description String 
+  gifURL String
 }

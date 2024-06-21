@@ -16,6 +16,8 @@ function CardGrid({boardID}) {
             title:'',
             description: '',
             author:'',
+            votes: 0,
+            gifURL: ''
           }
         );
     
@@ -30,11 +32,17 @@ function CardGrid({boardID}) {
     
     
         const fetchdata = async () => {
-        const response = await fetch( `http://localhost:3000/boards/${boardID}/cards`, 
-        {method: "GET" }
-          )
-        const data = await response.json()
-          updateArray(data)
+          console.log(boardID)
+          try {
+            const response = await fetch(`http://localhost:3000/boards/${boardID}/cards`, { method: "GET" });
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const data = await response.json();
+            updateArray(data);
+        } catch (error) {
+            console.error("Fetch error:", error.message);
+        }
     
     
         };
