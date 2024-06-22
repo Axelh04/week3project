@@ -47,7 +47,7 @@ Submitted by: Axel Hernandez
 ### Walkthrough Video
 
 
-<div style="position: relative; padding-bottom: 64.67065868263472%; height: 0;"><iframe src="https://www.loom.com/embed/7654c2b4f0d24c189fbed133c7b59a9f?sid=c0e0bcb0-122d-435d-ac9c-f996bca779b4" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+`Video:` https://www.loom.com/share/7654c2b4f0d24c189fbed133c7b59a9f?sid=0b4ecc97-1781-4b30-8976-6ca90439ae5e
 
 ### Reflection
 
