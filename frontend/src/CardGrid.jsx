@@ -1,93 +1,89 @@
 /* eslint-disable react/prop-types */
+import Card from "./Card";
+import CreateCard from "./CreateCard";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
-import Card from "./Card"
-import CreateCard from "./CreateCard"
-import { useState } from "react"
-import { useEffect } from "react"
-import { Link } from "react-router-dom"
+import "./BoardGrid.css";
+import "./SideBar.css";
 
+function CardGrid({ boardID }) {
+  const [boardArray, setBoardArray] = useState([]);
+  const [refresh, setRefreshState] = useState(0);
+  const [inputs, setInputs] = useState({
+    title: "",
+    description: "",
+    author: "",
+    votes: 0,
+    gifURL: "",
+  });
 
-function CardGrid({boardID}) {
+  // Updates the card array with new data
+  function updateArray(arr) {
+    setBoardArray(arr);
+  }
 
-        const [boardArray, setBoardArray] = useState([])
-        const [refresh, setRefreshState] = useState(0)
-        const [inputs, setInputs] = useState(
-          {
-            title:'',
-            description: '',
-            author:'',
-            votes: 0,
-            gifURL: ''
-          }
-        );
-    
-        function updateArray(arr) {
-            setBoardArray(arr)
-        }
-    
-        function handleRefresh() {
-          setRefreshState(prev => prev + 1); 
+  // Triggers a re-fetch of card data
+  function handleRefresh() {
+    setRefreshState((prev) => prev + 1);
+  }
+
+  // Fetches card data for the specified board
+  const fetchdata = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/boards/${boardID}/cards`,
+        { method: "GET" }
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
-    
-    
-    
-        const fetchdata = async () => {
-          console.log(boardID)
-          try {
-            const response = await fetch(`http://localhost:3000/boards/${boardID}/cards`, { method: "GET" });
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            const data = await response.json();
-            updateArray(data);
-        } catch (error) {
-            console.error("Fetch error:", error.message);
-        }
-    
-    
-        };
-    
-        
-        useEffect(() => {
-    
-        fetchdata();
-    
-        }, [refresh] );
-        
-        
-        
-        return(
-            <>
-            <div>
-          <CreateCard boardID = {boardID} inputs = {inputs} setInputs = {setInputs} handleRefresh= {handleRefresh} />
-          </div>
-            <div className="grid-container">
-            <Link to = "/"><h3>Go back</h3></Link>
-            <button onClick={handleRefresh}>Refresh</button>
-            
-            {boardArray.length > 0 ? (
-              boardArray.map((value, i) => {
-                return (
-                
-                  <Card
-                    key={i}
-                    prop = {boardArray[i]}
-                    boardID = {boardID}
-                    handleRefresh= {handleRefresh}
+      const data = await response.json();
+      updateArray(data);
+    } catch (error) {
+      // Optionally, handle errors in a user-friendly way
+      alert("Failed to fetch cards. Please try again.");
+    }
+  };
 
-                  />
-              
-                );
-              })
-            ) : (
-              <div>None</div>
-            )}
-            
-    
-          </div>
-            </>
-        )
+  // Effect to re-fetch data when refresh state changes
+  useEffect(() => {
+    fetchdata();
+  }, [refresh]);
 
+  return (
+    <>
+      <div className="sideBar">
+        <h1>KudoCards.</h1>
+        <CreateCard
+          boardID={boardID}
+          inputs={inputs}
+          setInputs={setInputs}
+          handleRefresh={handleRefresh}
+        />
+        <Link to="/">
+          <h3 id="back">🔙</h3>
+        </Link>
+      </div>
+
+      <div className="container">
+        <div className="grid-container-card">
+          {boardArray.length > 0 ? (
+            boardArray.map((value, i) => (
+              <Card
+                key={i}
+                prop={value}
+                boardID={boardID}
+                handleRefresh={handleRefresh}
+              />
+            ))
+          ) : (
+            <div>No cards found.</div>
+          )}
+        </div>
+      </div>
+    </>
+  );
 }
 
-export default CardGrid
+export default CardGrid;

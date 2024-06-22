@@ -1,16 +1,17 @@
 /* eslint-disable react/prop-types */
-
 import { useState } from "react";
+import "./CreateBoard.css"; // CSS for CreateCard is similar or included in CreateBoard.css
 
 function CreateCard({ boardID, inputs, setInputs, handleRefresh }) {
-  // const [query, setQuery] = useState("");
   const [gifOptions, setGifOptions] = useState([]);
 
+  // Handles changes in the GIF search input and triggers a GIF search
   const handleQueryChange = function (event) {
     const newQuery = event.target.value;
-    searchGifs(newQuery); // Use newQuery directly
+    searchGifs(newQuery);
   };
 
+  // Handles the form submission for creating a new card
   const handleSubmit = async (event) => {
     event.preventDefault();
     fetch(`http://localhost:3000/boards/${boardID}/cards/create`, {
@@ -22,25 +23,28 @@ function CreateCard({ boardID, inputs, setInputs, handleRefresh }) {
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Failed to add board");
+          throw new Error("Failed to add card");
         }
         return response.json();
       })
-      .then((data) => {
-        console.log("Success:", data);
+      .then(() => {
+        // Reset input fields after successful card creation
         setInputs({
           title: "",
           description: "",
           author: "",
           gifURL: "",
         });
-        handleRefresh(); // Call handleRefresh here after successful POST
+        // Refresh the card list to include the new card
+        handleRefresh();
       })
       .catch((error) => {
-        console.error("Error:", error);
+        // Optionally, handle errors in a user-friendly way
+        alert("Failed to create the card. Please try again.",error);
       });
   };
 
+  // Handles changes to input fields
   const handleChange = (event) => {
     const { name, value } = event.target;
     setInputs((prevState) => ({
@@ -49,6 +53,7 @@ function CreateCard({ boardID, inputs, setInputs, handleRefresh }) {
     }));
   };
 
+  // Fetches GIFs based on the user's query
   const searchGifs = async (query) => {
     try {
       const API_KEY = import.meta.env.VITE_APP_API_KEY;
@@ -56,55 +61,78 @@ function CreateCard({ boardID, inputs, setInputs, handleRefresh }) {
         `https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${query}&limit=2`
       );
       const gifData = await response.json();
-      console.log(gifData);
       setGifOptions(gifData.data);
     } catch (error) {
-      console.error("Error searching for GIFs:", error);
+      // Optionally, handle errors in a user-friendly way
+      alert("Error searching for GIFs. Please try again.");
     }
   };
 
+  // Handles selection of a GIF from the search results
   const handleGifSelect = (gifUrl) => {
-    setInputs(prevInputs => ({
+    setInputs((prevInputs) => ({
       ...prevInputs,
-      gifURL: gifUrl  // Assuming you have a gifUrl field in your inputs state
+      gifURL: gifUrl,
     }));
-    setGifOptions([])
+    setGifOptions([]); // Clear GIF options after selection
   };
 
   return (
-    <div>
+    <div id="formCard">
+      <span id="addHeader">➕</span>
       <label>
-        Enter title:
         <input
+          className="formInput"
           type="text"
           name="title"
           value={inputs.title}
           onChange={handleChange}
+          placeholder="Enter title.."
+          required
         />
       </label>
       <label>
-        Enter description:
-        <input
-          type="text"
+        <textarea
+          className="formInput"
           name="description"
           value={inputs.description}
           onChange={handleChange}
+          placeholder="Enter description.."
+          required
         />
       </label>
       <label>
-        Search Gif:
-        <input onChange={handleQueryChange} placeholder="Search.." />
+        <input
+          className="formInput"
+          type="text"
+          name="author"
+          value={inputs.author}
+          onChange={handleChange}
+          placeholder="(Opt.) Name.."
+        />
+      </label>
+      <label>
+        <input
+          className="formInput"
+          onChange={handleQueryChange}
+          placeholder="Search GIF.."
+        />
       </label>
       {gifOptions.length > 0 && (
-        <div>
+        <div className="grid-container-gifSearch">
           {gifOptions.map((gif, i) => (
-            <div key={i} onClick={() => handleGifSelect(gif.images.downsized.url)}>
-              <img src={gif.images.downsized.url} alt="GIF" />
+            <div
+              key={i}
+              onClick={() => handleGifSelect(gif.images.downsized.url)}
+            >
+              <img id="gifImg" src={gif.images.downsized.url} alt="GIF" />
             </div>
           ))}
         </div>
       )}
-      <button onClick={handleSubmit}>Submit</button>
+      <button className="formInput" onClick={handleSubmit}>
+        Submit
+      </button>
     </div>
   );
 }

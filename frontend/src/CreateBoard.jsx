@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
+import "./CreateBoard.css";
 
 function CreateBoard({ inputs, setInputs, handleRefresh }) {
+  // Handles the form submission for creating a new board
   const handleSubmit = async (event) => {
     event.preventDefault();
     fetch("http://localhost:3000/boards/create", {
@@ -16,25 +18,25 @@ function CreateBoard({ inputs, setInputs, handleRefresh }) {
         }
         return response.json();
       })
-      .then((data) => {
-        console.log("Success:", data);
+      .then(() => {
+        // Reset input fields after successful board creation
         setInputs({
           title: "",
           author: "",
           category: "",
-          
         });
-        handleRefresh(); 
+        // Refresh the board list to include the new board
+        handleRefresh();
       })
       .catch((error) => {
-        console.error("Error:", error);
+        // Optionally, handle errors in a user-friendly way
+        alert("Failed to create the board. Please try again.", error);
       });
-
-
   };
 
+  // Handles changes to input fields
   const handleChange = (event) => {
-    const { name, value } = event.target; 
+    const { name, value } = event.target;
     setInputs((prevState) => ({
       ...prevState,
       [name]: value,
@@ -42,35 +44,46 @@ function CreateBoard({ inputs, setInputs, handleRefresh }) {
   };
 
   return (
-    <div>
+    <div id="form">
+      <span id="addHeader">➕</span>
       <label>
-        Enter title:
         <input
+          className="formInput"
           type="text"
           name="title"
           value={inputs.title}
           onChange={handleChange}
+          placeholder="Enter title:"
+          required
         />
       </label>
       <label>
-        Enter name:
         <input
+          className="formInput"
           type="text"
           name="author"
           value={inputs.author}
           onChange={handleChange}
+          placeholder="(Opt.) Name: "
         />
       </label>
       <label>
-        Choose a category:
-        <select name="category" value={inputs.category} onChange={handleChange}>
-          <option value="">Select a category</option>
+        <select
+          className="formInput"
+          name="category"
+          value={inputs.category}
+          onChange={handleChange}
+          required
+        >
+          <option value="">Category</option>
           <option value="celebration">Celebration</option>
           <option value="thankyou">Thank You</option>
           <option value="inspiration">Inspiration</option>
         </select>
       </label>
-      <button onClick={handleSubmit}>Submit</button>
+      <button className="formInput" onClick={handleSubmit}>
+        Submit
+      </button>
     </div>
   );
 }

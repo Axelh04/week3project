@@ -1,39 +1,46 @@
-
 /* eslint-disable react/prop-types */
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
+function Board({ prop, onSelectBoard, handleRefresh }) {
+  // Handles board selection, setting the current board ID
+  const handleSwitch = () => {
+    onSelectBoard(prop.id);
+  };
 
-function Board({prop, onSelectBoard, handleRefresh}) {
+  // Handles the deletion of a board
+  const handleDelete = async () => {
+    fetch(`http://localhost:3000/boards/${prop.id}/delete`, {
+      method: "DELETE",
+    })
+      .then(() => {
+        // Refresh the list of boards upon successful deletion
+        handleRefresh();
+      })
+      .catch((error) => {
+        // Ideally, handle errors in a user-friendly way
+        alert("Failed to delete the board. Please try again: ", error);
+      });
+  };
 
-    const handleSwitch = () => {
-        onSelectBoard(prop.id);
-      };
-
-    const handleDelete = async () => {
-        fetch(`http://localhost:3000/boards/${prop.id}/delete`, {
-            method: 'DELETE',
-          })
-          .then(() => {
-            console.log('Success:')
-            handleRefresh();
-      
-          })
-          .catch((error) => {
-            console.error('Error:', error)
-          })
-
-
-
-    }
   return (
-    <div className="poster" >
-    `<Link to = "/cards"><h3 onClick={handleSwitch}>{prop.title}</h3></Link>
-    
-      <h3>{prop.author}</h3>
-      <h3>{prop.category}</h3>
-      <img src = {prop.gifURL}/>
-      <h3 onClick={handleDelete}>Delete</h3>
+    <div className="board">
+      {/* Link to the cards of the board */}
+      <Link to="/cards">
+        <img onClick={handleSwitch} src={prop.gifURL} alt="Board Thumbnail" />
+      </Link>
+      <span id="title">
+        {prop.title}{" "}
+        <span id="delete" onClick={handleDelete}>
+          ❌ {/* Delete icon */}
+        </span>
+      </span>
 
+      <span id="author">
+        By: <span id="text">{prop.author}</span>
+      </span>
+      <span id="category">
+        Category: <span id="text">{prop.category}</span>
+      </span>
     </div>
   );
 }

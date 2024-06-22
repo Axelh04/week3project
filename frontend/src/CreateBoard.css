@@ -1,0 +1,58 @@
+#form, #formCard {
+    display: block;
+    font-size: x-large;
+    border-radius: 2rem;
+    margin:auto;
+    margin-top: 5%;
+    margin-bottom: 5%;
+
+    width: 30%;
+    color: #000000;
+    height: 5vh;
+    background: #e7e7e7;
+    box-shadow:  15px 15px 15px #bebebe,
+             -15px -15px 15px #ffffff;
+             transition: 1s;
+             overflow: hidden;
+}
+
+#form:hover {
+    padding-bottom: 33%;
+    width: 30%;
+    box-shadow:  -15px -15px 15px #bebebe,
+             15px 15px 15px #ffffff;
+             
+   }
+
+#formCard:hover {
+    padding-bottom: 100%;
+    width: 80%;
+    box-shadow:  -15px -15px 15px #bebebe,
+             15px 15px 15px #ffffff;
+    overflow-y: scroll;
+   }
+
+#addHeader {
+    display: block;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    font-size: xx-large;
+}
+
+.formInput {
+    display: block;
+    margin: auto;
+    margin-bottom: 8%;
+    margin-top: 0%;
+  font-size:large;
+  padding: 1%;
+  width: 80%;
+  color: #5c5c5c;
+  border: none;
+  padding: 2% 1% 2% 4%;
+    border-radius: 1rem;
+    background: #ffffff;
+    box-shadow:  5px 5px 10px #bebebe,
+             -5px -5px 10px #ffffff;
+    transition: 2s;
+}

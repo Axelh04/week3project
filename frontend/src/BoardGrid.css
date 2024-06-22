@@ -1,0 +1,141 @@
+.container {
+  width: 69%;
+  margin: 0;
+  height: 100vh;
+  display: inline-block;
+  overflow-y: hidden;
+  overflow-x: visible;
+}
+
+.grid-container {
+  margin: auto;
+  background: #e0e0e0;
+  width: 97%;
+  height: 93vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding: 4% 4% 4% 4%;
+  overflow-x: visible;
+  overflow-y: scroll;
+}
+
+.grid-container-gifSearch {
+  margin: auto;
+  margin-bottom: 5%;
+  background: #e0e0e0;
+  width: 80%;
+  height: min-content;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 10% 10% 10% 10%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+.grid-container-card {
+  margin: auto;
+  background: #e0e0e0;
+  width: 92%;
+  height: 93vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 4% 4% 4% 4%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+img {
+  height: 20vh;
+  position: relative;
+  top: -10px;
+  left: -10px;
+  border-radius: 2rem;
+  transition: 0.5s;
+}
+
+#gifImg {
+  height: 10vh;
+  position: relative;
+  border-radius: 2rem;
+  transition: 0.5s;
+}
+
+img:hover,
+#gifIMG:hover {
+  top: -20px;
+  left: -20px;
+
+  box-shadow: 20px 20px 30px #1e1e1e, -20px -20px 30px #bebebe;
+}
+
+.board,
+.card {
+  height: 30vh;
+  margin: 2%;
+  border-radius: 2rem;
+  background: #e0e0e0;
+  box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
+  transition: 2s;
+}
+
+.board:hover,
+.card {
+  margin-top: -3px;
+  margin-left: -3px;
+  box-shadow: 20px 20px 30px #1e1e1e, -20px -20px 30px #bebebe;
+}
+
+#title {
+  display: block;
+  font-weight: 800;
+  font-size: xx-large;
+  margin-top: 0%;
+  margin-left: 5%;
+}
+
+#author {
+  display: block;
+  font-weight: 200;
+  font-size: medium;
+  margin-left: 5%;
+}
+
+#text {
+  font-weight: 400;
+  color: purple;
+  font-style: italic;
+}
+
+#category {
+  display: block;
+  font-size: medium;
+  font-weight: 200;
+  margin-left: 5%;
+}
+
+#delete {
+  display: none;
+  width: min-content;
+  position: relative;
+  font-size: x-large;
+  color: rgb(77, 77, 77);
+  cursor: pointer;
+}
+
+.board:hover > #title > #delete {
+  display: inline-block;
+}
+
+#upVote {
+  display: inline-block;
+  margin-left: 3%;
+  margin-right: 3%;
+  font-weight: 400;
+  color: purple;
+  font-style: italic;
+  cursor: pointer;
+}
