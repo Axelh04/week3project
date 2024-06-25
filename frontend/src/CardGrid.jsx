@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 import "./BoardGrid.css";
 import "./SideBar.css";
+import Footer from "./footer";
 
 function CardGrid({ boardID }) {
   const [boardArray, setBoardArray] = useState([]);
@@ -82,6 +83,8 @@ function CardGrid({ boardID }) {
           )}
         </div>
       </div>
+
+      <Footer/>
     </>
   );
 }

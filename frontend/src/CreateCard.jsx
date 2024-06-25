@@ -58,7 +58,7 @@ function CreateCard({ boardID, inputs, setInputs, handleRefresh }) {
     try {
       const API_KEY = import.meta.env.VITE_APP_API_KEY;
       const response = await fetch(
-        `https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${query}&limit=2`
+        `https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${query}&limit=6`
       );
       const gifData = await response.json();
       setGifOptions(gifData.data);

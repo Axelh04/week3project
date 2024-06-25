@@ -5,6 +5,7 @@ import Board from "./Board";
 import CreateBoard from "./CreateBoard";
 import "./SideBar.css";
 import "./BoardGrid.css";
+import Footer from "./footer";
 
 function BoardGrid({ onSelectBoard }) {
   const [boardArray, setBoardArray] = useState([]);
@@ -157,6 +158,7 @@ function BoardGrid({ onSelectBoard }) {
           )}
         </div>
       </div>
+      <Footer />
     </>
   );
 }
